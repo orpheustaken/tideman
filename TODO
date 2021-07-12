@@ -1,1 +1,6 @@
-Adapt the code to work without the CS50 library.
+TODO
+    adapt the code to work without the cs50's library
+    implement gtk
+
+orig_tideman.c is the original file taken from my cs50 ide
+tideman.c is where i am improving it
