@@ -102,7 +102,7 @@ bool vote(int rank, char * name, int ranks[])
 {
     for (int i = 0; i < candidate_count; i++)
     {
-        if (strcmp(candidates[i], name) == 0)
+        if (!strcmp(candidates[i], name))
         {
             ranks[rank] = i;
             return true;
@@ -205,7 +205,7 @@ void lock_pairs(void)
                     arrow++;
                 }
             }
-            edges_pointing[j] = (arrow == 0) ? false : true;
+            edges_pointing[j] = (!arrow) ? false : true;
         }
 
         // Check if current lock created a cycle
@@ -219,7 +219,7 @@ void lock_pairs(void)
         }
 
         // Unlock if cycle
-        if (cycles == 0)
+        if (!cycles)
         {
             locked[pairs[i].winner][pairs[i].loser] = false;
         }
@@ -232,12 +232,12 @@ void print_winner(void)
 {
     for (int i = 0; i < pair_count; i++)
     {
-        int is_source = 0;
+        int not_source = 0;
         for (int j = 0; j < pair_count; j++)
         {
-            is_source += (locked[j][i]) ? 1 : 0;
+            not_source += (locked[j][i]) ? 1 : 0;
         }
-        if (is_source == 0)
+        if (!not_source)
         {
             printf("%s is the winner\n", candidates[i]);
         }
