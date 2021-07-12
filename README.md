@@ -30,7 +30,7 @@ $ make tideman
 
 ## Usage
 ```bash
-./tideman Alice Bob Charlie
+$ ./tideman Alice Bob Charlie
 Number of voters: 5
 Rank 1: Alice
 Rank 2: Charlie
