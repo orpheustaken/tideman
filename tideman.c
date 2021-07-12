@@ -240,7 +240,7 @@ void print_winner(void)
         }
         if (is_source == 0)
         {
-            printf("%s\n", candidates[i]);
+            printf("%s is the winner\n", candidates[i]);
         }
     }
     return;
