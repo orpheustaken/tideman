@@ -1,16 +1,14 @@
 #include <cs50.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-// #include <stdbool.h>
 
 // Max number of candidates
 #define MAX 9
 
-// preferences[i][j] is number of voters who prefer i over j
+// Preferences[i][j] is number of voters who prefer i over j
 int preferences[MAX][MAX];
 
-// locked[i][j] means i is locked in over j
+// Locked[i][j] means i is locked in over j
 bool locked[MAX][MAX];
 
 // Each pair has a winner, loser
@@ -67,11 +65,7 @@ int main(int argc, char * argv[])
     }
 
     pair_count = 0;
-
-    // int voter_count = get_int("Number of voters: "); Old syntax
-    int voter_count;
-    printf("Number of voters: ");
-    scanf("%i", &voter_count);
+    int voter_count = get_int("Number of voters: ");
 
     // Query for votes
     for (int i = 0; i < voter_count; i++)
@@ -82,18 +76,13 @@ int main(int argc, char * argv[])
         // Query for each rank
         for (int j = 0; j < candidate_count; j++)
         {
-            char * name = get_string("Rank %i: ", j + 1); // Old syntax
-            // char * name = (char *)malloc(candidate_count * sizeof(long));
-            // printf("Rank %i: ", j + 1);
-            // scanf("%s", &name);
+            char * name = get_string("Rank %i: ", j + 1);
 
             if (!vote(j, name, ranks))
             {
                 printf("Invalid vote.\n");
                 return 3;
             }
-
-            // free(name);
         }
 
         record_preferences(ranks);
@@ -256,3 +245,4 @@ void print_winner(void)
     }
     return;
 }
+
