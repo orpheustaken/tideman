@@ -6,6 +6,8 @@ Lines to be changed:
 
 2. Implement GTK
 
+3. Clear all ocurrencies of `variable == 0` and `variable == 1`
+
 ### Notes
 `orig_tideman.c` is the original file taken from CS50 IDE </br>
 `tideman.c` is where I am working on
