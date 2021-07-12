@@ -160,8 +160,7 @@ void add_pairs(void)
 // Sort pairs in decreasing order by strength of victory
 void sort_pairs(void)
 {
-    // Unused variable, CS50's Makefile is configured to NOT warn about that
-    int /*strength,*/ left_strength, right_strength, r_winner, r_loser;
+    int left_strength, right_strength, r_winner, r_loser;
     int swap_counter = -1;
     do
     {
@@ -201,7 +200,7 @@ void lock_pairs(void)
             int arrow = 0;
             for (int k = 0; k < candidate_count; k++)
             {
-                if (locked[k][j] == true)
+                if (locked[k][j])
                 {
                     arrow++;
                 }
@@ -213,7 +212,7 @@ void lock_pairs(void)
         int cycles = 0;
         for (int j = 0; j < candidate_count; j++)
         {
-            if (edges_pointing[j] == false)
+            if (!edges_pointing[j])
             {
                 cycles++;
             }
@@ -236,7 +235,7 @@ void print_winner(void)
         int is_source = 0;
         for (int j = 0; j < pair_count; j++)
         {
-            is_source += (locked[j][i] == true) ? 1 : 0;
+            is_source += (locked[j][i]) ? 1 : 0;
         }
         if (is_source == 0)
         {
