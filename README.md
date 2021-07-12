@@ -2,8 +2,7 @@
 My personal implementation and improvements on CS50's problem set week 3.
 
 ## Library
-At the moment, [CS50's library](https://cs50.readthedocs.io/libraries/cs50/c/) is required to compile this code.
-Make sure to have it installed with the following instructions.
+At the moment, [CS50's library](https://cs50.readthedocs.io/libraries/cs50/c/) is required to compile this code. Make sure to have it installed with the following instructions.
 
 ### Ubuntu
 ``` bash
@@ -21,6 +20,12 @@ $ dnf install libcs50
 For us running Arch, the library is available in the AUR:
 ``` bash
 $ yay libcs50
+```
+
+## Compiling
+Everything needed is already specified in the Makefile:
+``` bash
+$ make tideman
 ```
 
 ## Usage
@@ -48,12 +53,6 @@ Rank 2: Alice
 Rank 3: Bob
 
 Charlie
-```
-
-## Compiling
-Everything needed is already specified in the Makefile:
-``` bash
-$ make tideman
 ```
 
 ## License
