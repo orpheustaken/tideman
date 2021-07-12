@@ -1,7 +1,11 @@
-# Tideman voting method written in C
-My personal implementation and improvements on CS50's problem set week 3.
+# Tideman's Ranked Pairs
+> Ranked pairs (RP) or the Tideman method is an electoral system developed in 1987 by Nicolaus Tideman that selects a single winner using votes that express preferences. RP can also be used to create a sorted list of winners.
 
-## Library
+> If there is a candidate who is preferred over the other candidates, when compared in turn with each of the others, RP guarantees that candidate will win. Because of this property, RP is, by definition, a Condorcet method. 
+
+This is my personal implementation and improvements on CS50's problem set week 3, written in C.
+
+## CS50's Library
 At the moment, [CS50's library](https://cs50.readthedocs.io/libraries/cs50/c/) is required to compile this code. Make sure to have it installed with the following instructions.
 
 ### Ubuntu
