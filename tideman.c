@@ -71,7 +71,7 @@ int main(int argc, char * argv[])
     // int voter_count = get_int("Number of voters: "); Old syntax
     int voter_count;
     printf("Number of voters: ");
-    scanf("%s", &voter_count);
+    scanf("%i", &voter_count);
 
     // Query for votes
     for (int i = 0; i < voter_count; i++)
@@ -171,7 +171,8 @@ void add_pairs(void)
 // Sort pairs in decreasing order by strength of victory
 void sort_pairs(void)
 {
-    int strength, left_strength, right_strength, r_winner, r_loser;
+    // Unused variable, CS50's Makefile is configured to NOT warn about that
+    int /*strength,*/ left_strength, right_strength, r_winner, r_loser;
     int swap_counter = -1;
     do
     {
