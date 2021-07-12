@@ -23,7 +23,7 @@ pair;
 char * candidates[MAX];
 pair pairs[MAX * (MAX - 1) / 2];
 
-int pair_count;
+int pair_count = 0;
 int candidate_count;
 
 // Function prototypes
@@ -64,13 +64,12 @@ int main(int argc, char * argv[])
         }
     }
 
-    pair_count = 0;
     int voter_count = get_int("Number of voters: ");
 
     // Query for votes
     for (int i = 0; i < voter_count; i++)
     {
-        // ranks[i] is voter's ith preference
+        // Ranks[i] is voter's ith preference
         int ranks[candidate_count];
 
         // Query for each rank
