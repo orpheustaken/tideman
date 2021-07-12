@@ -56,7 +56,7 @@ Rank 1: Charlie
 Rank 2: Alice
 Rank 3: Bob
 
-Charlie
+Charlie is the winner
 ```
 
 ## License
