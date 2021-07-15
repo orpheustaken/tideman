@@ -1,9 +1,10 @@
 #include <cs50.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-// Max number of candidates
-#define MAX 9
+#define MAX 9       // Max number of candidates
+#define LINE_MAX 3  // Max size for fgets one integer
 
 // Preferences[i][j] is number of voters who prefer i over j
 int preferences[MAX][MAX];
@@ -11,7 +12,7 @@ int preferences[MAX][MAX];
 // Locked[i][j] means i is locked in over j
 bool locked[MAX][MAX];
 
-// Each pair has a winner, loser
+// Each pair has a winner and loser
 typedef struct
 {
     int winner;
@@ -20,21 +21,21 @@ typedef struct
 pair;
 
 // Array of candidates
-char * candidates[MAX];
+char *candidates[MAX];
 pair pairs[MAX * (MAX - 1) / 2];
 
 int pair_count = 0;
 int candidate_count;
 
 // Function prototypes
-bool vote(int rank, char * name, int ranks[]);
+bool vote(int rank, char *name, int ranks[]);
 void record_preferences(int ranks[]);
 void add_pairs(void);
 void sort_pairs(void);
 void lock_pairs(void);
 void print_winner(void);
 
-int main(int argc, char * argv[])
+int main(int argc, char *argv[])
 {
     // Check for invalid usage
     if (argc < 2)
@@ -64,7 +65,24 @@ int main(int argc, char * argv[])
         }
     }
 
-    int voter_count = get_int("Number of voters: ");
+    // int voter_count = get_int("Number of voters: ");
+    int voter_count;
+
+    char *end;
+    char buf[LINE_MAX];
+
+    do
+    {
+        printf("Number of voters: ");
+        if (!fgets(buf, sizeof buf, stdin)) break;
+
+        // Remove \n
+        buf[strlen(buf) - 1] = 0;
+
+        voter_count = strtol(buf, &end, 10);
+    }
+    while (end != buf + strlen(buf));
+
 
     // Query for votes
     for (int i = 0; i < voter_count; i++)
@@ -75,7 +93,7 @@ int main(int argc, char * argv[])
         // Query for each rank
         for (int j = 0; j < candidate_count; j++)
         {
-            char * name = get_string("Rank %i: ", j + 1);
+            char *name = get_string("Rank %i: ", j + 1);
 
             if (!vote(j, name, ranks))
             {
@@ -97,7 +115,7 @@ int main(int argc, char * argv[])
 }
 
 // Update ranks given a new vote
-bool vote(int rank, char * name, int ranks[])
+bool vote(int rank, char *name, int ranks[])
 {
     for (int i = 0; i < candidate_count; i++)
     {
