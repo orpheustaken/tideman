@@ -1,7 +1,7 @@
-#include <cs50.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define MAX 9       // Max number of candidates
 #define LINE_MAX 3  // Max size for fgets one integer
@@ -21,21 +21,21 @@ typedef struct
 pair;
 
 // Array of candidates
-char *candidates[MAX];
+char* candidates[MAX];
 pair pairs[MAX * (MAX - 1) / 2];
 
 int pair_count = 0;
 int candidate_count;
 
 // Function prototypes
-bool vote(int rank, char *name, int ranks[]);
+bool vote(int rank, char* name, int ranks[]);
 void record_preferences(int ranks[]);
 void add_pairs(void);
 void sort_pairs(void);
 void lock_pairs(void);
 void print_winner(void);
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     // Check for invalid usage
     if (argc < 2)
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     // int voter_count = get_int("Number of voters: ");
     int voter_count;
 
-    char *end;
+    char* end;
     char buf[LINE_MAX];
 
     do
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
         // Query for each rank
         for (int j = 0; j < candidate_count; j++)
         {
-            char *name = get_string("Rank %i: ", j + 1);
+            char* name = get_string("Rank %i: ", j + 1);
 
             if (!vote(j, name, ranks))
             {
@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
 }
 
 // Update ranks given a new vote
-bool vote(int rank, char *name, int ranks[])
+bool vote(int rank, char* name, int ranks[])
 {
     for (int i = 0; i < candidate_count; i++)
     {
