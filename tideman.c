@@ -45,12 +45,23 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+    // Check if input is greater than 10 characterss long
+    for (int i = 0; i < argc - 1; i++)
+    {
+        if (strlen(argv[i + 1]) > NAME_MAX - 2)
+        {
+            printf("Error 2: %s\n\n", argv[i + 1]);
+            printf("Candidate's name cannot be greater than 10 characters long\n");
+            return 2;
+        }
+    }
+
     // Populate array of candidates
     candidate_count = argc - 1;
     if (candidate_count > CANDIDATE_MAX)
     {
         printf("Maximum number of candidates is %i\n", CANDIDATE_MAX);
-        return 2;
+        return 3;
     }
     for (int i = 0; i < candidate_count; i++)
     {
@@ -111,7 +122,7 @@ int main(int argc, char* argv[])
             if (!vote(j, name, ranks))
             {
                 printf("Invalid vote.\n");
-                return 3;
+                return 4;
             }
 
             // Free allocated memory
@@ -130,7 +141,7 @@ int main(int argc, char* argv[])
     if(!print_winner())
     {
         printf("Tideman was not able to process a winner\n");
-        return 4;
+        return 5;
     }
 
     return 0;
