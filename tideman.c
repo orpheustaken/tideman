@@ -34,7 +34,7 @@ void record_preferences(int ranks[]);
 void add_pairs(void);
 void sort_pairs(void);
 void lock_pairs(void);
-void print_winner(void);
+bool print_winner(void);
 
 int main(int argc, char* argv[])
 {
@@ -84,7 +84,6 @@ int main(int argc, char* argv[])
     }
     while (end != int_buffer + strlen(int_buffer));
 
-
     // Query for votes
     for (int i = 0; i < voter_count; i++)
     {
@@ -126,7 +125,14 @@ int main(int argc, char* argv[])
     add_pairs();
     sort_pairs();
     lock_pairs();
-    print_winner();
+
+    // Check if Tideman was able to print a winner
+    if(!print_winner())
+    {
+        printf("Tideman was not able to process a winner\n");
+        return 4;
+    }
+
     return 0;
 }
 
@@ -261,8 +267,9 @@ void lock_pairs(void)
 }
 
 // Print the winner of the election
-void print_winner(void)
+bool print_winner(void)
 {
+    int winner = 0;
     for (int i = 0; i < pair_count; i++)
     {
         int not_source = 0;
@@ -273,8 +280,11 @@ void print_winner(void)
         if (!not_source)
         {
             printf("%s is the winner\n", candidates[i]);
+            winner++;
         }
     }
-    return;
+    if (!winner) return false;
+
+    return true;
 }
 
