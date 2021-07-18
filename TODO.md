@@ -1,15 +1,14 @@
 ### TODO
-1. Adapt the code to work without the cs50's library </br>
-Lines to be changed:
-`68  get_int`
-`79  get_string`
+1. Adapt the code to work without the cs50's library **DONE**
 
 2. Implement GTK
 
 3. Clear all ocurrencies of `variable == 0` and `variable == 1` **DONE**
 
+4. Fix all the bugs that Victor found while testing
+
 ### Notes
-`orig_tideman.c` is the original file taken from CS50 IDE </br>
+`original/orig_tideman.c` is the original file taken from CS50 IDE </br>
 `tideman.c` is where I am working on
 
 C doesn't have any built-in boolean types, libcs50 also takes care of that </br>
