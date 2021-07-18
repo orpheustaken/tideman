@@ -6,7 +6,7 @@
 This is my personal implementation and improvements on CS50's problem set week 3, written in C.
 
 ## Compiling
-Everything needed is already specified in the Makefile:
+Clang is the chosen compiler for tideman, besides that, everything needed is already specified in the Makefile:
 ``` bash
 $ make tideman
 ```
