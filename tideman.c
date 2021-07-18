@@ -3,14 +3,15 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define MAX 9       // Max number of candidates
-#define LINE_MAX 3  // Max size for fgets one integer
+#define CANDIDATE_MAX 9     // Max number of candidates
+#define INTEGER_MAX 3       // Max size for fgets one integer
+#define NAME_MAX 12         // Max size for fgets candidate name
 
 // Preferences[i][j] is number of voters who prefer i over j
-int preferences[MAX][MAX];
+int preferences[CANDIDATE_MAX][CANDIDATE_MAX];
 
 // Locked[i][j] means i is locked in over j
-bool locked[MAX][MAX];
+bool locked[CANDIDATE_MAX][CANDIDATE_MAX];
 
 // Each pair has a winner and loser
 typedef struct
@@ -21,8 +22,8 @@ typedef struct
 pair;
 
 // Array of candidates
-char* candidates[MAX];
-pair pairs[MAX * (MAX - 1) / 2];
+char* candidates[CANDIDATE_MAX];
+pair pairs[CANDIDATE_MAX * (CANDIDATE_MAX - 1) / 2];
 
 int pair_count = 0;
 int candidate_count;
@@ -46,9 +47,9 @@ int main(int argc, char* argv[])
 
     // Populate array of candidates
     candidate_count = argc - 1;
-    if (candidate_count > MAX)
+    if (candidate_count > CANDIDATE_MAX)
     {
-        printf("Maximum number of candidates is %i\n", MAX);
+        printf("Maximum number of candidates is %i\n", CANDIDATE_MAX);
         return 2;
     }
     for (int i = 0; i < candidate_count; i++)
@@ -69,19 +70,19 @@ int main(int argc, char* argv[])
     int voter_count;
 
     char* end;
-    char buf[LINE_MAX];
+    char int_buffer[INTEGER_MAX];
 
     do
     {
         printf("Number of voters: ");
-        if (!fgets(buf, sizeof buf, stdin)) break;
+        if (!fgets(int_buffer, INTEGER_MAX, stdin)) break;
 
         // Remove \n
-        buf[strlen(buf) - 1] = 0;
+        int_buffer[strlen(int_buffer) - 1] = 0;
 
-        voter_count = strtol(buf, &end, 10);
+        voter_count = strtol(int_buffer, &end, 10);
     }
-    while (end != buf + strlen(buf));
+    while (end != int_buffer + strlen(int_buffer));
 
 
     // Query for votes
@@ -93,17 +94,32 @@ int main(int argc, char* argv[])
         // Query for each rank
         for (int j = 0; j < candidate_count; j++)
         {
-            char* name = get_string("Rank %i: ", j + 1);
+            // char* name = get_string("Rank %i: ", j + 1);
+            char* name = NULL;
+            char name_buffer[NAME_MAX];
+
+            printf("Rank %i: ", j + 1);
+            if (!fgets(name_buffer, NAME_MAX, stdin)) break;
+
+            // Remove \n
+            name_buffer[strlen(name_buffer) - 1] = 0;
+
+            // Allocate heap memory
+            name = malloc(strlen(name_buffer) + 1);
+
+            strcpy(name, name_buffer);
 
             if (!vote(j, name, ranks))
             {
                 printf("Invalid vote.\n");
                 return 3;
             }
+
+            // Free allocated memory
+            free(name);
         }
 
         record_preferences(ranks);
-
         printf("\n");
     }
 
