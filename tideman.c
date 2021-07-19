@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 #define CANDIDATE_MAX 9     // Max number of candidates
-#define INTEGER_MAX 3       // Max size for fgets one integer
+#define INTEGER_MAX 5       // Max size for fgets one integer
 #define NAME_MAX 12         // Max size for fgets candidate name
 
 // Preferences[i][j] is number of voters who prefer i over j
@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
     // Check for invalid usage
     if (argc < 2)
     {
-        printf("Usage: tideman [candidate ...]\n");
+        printf("\nUsage: ./tideman [candidate1] [candidate2] ...\n");
         return 1;
     }
 
@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
     {
         if (strlen(argv[i + 1]) > NAME_MAX - 2)
         {
-            printf("Error 2: %s\n\n", argv[i + 1]);
+            printf("Error: %s\n\n", argv[i + 1]);
             printf("Candidate's name cannot be greater than 10 characters long\n");
             return 2;
         }
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
     candidate_count = argc - 1;
     if (candidate_count > CANDIDATE_MAX)
     {
-        printf("Maximum number of candidates is %i\n", CANDIDATE_MAX);
+        printf("\nMaximum number of candidates is %i\n", CANDIDATE_MAX);
         return 3;
     }
     for (int i = 0; i < candidate_count; i++)
@@ -88,12 +88,26 @@ int main(int argc, char* argv[])
         printf("Number of voters: ");
         if (!fgets(int_buffer, INTEGER_MAX, stdin)) break;
 
-        // Remove \n
-        int_buffer[strlen(int_buffer) - 1] = 0;
+        // Remove \n and check for buffer overflow
+        if (int_buffer[strlen(int_buffer) - 1] == '\n')
+        {
+            int_buffer[strlen(int_buffer) - 1] = 0;
+        }
+        else
+        {
+            printf("\nThe number of voters must be less than 1000\n");
+            return 4;
+        }
 
         voter_count = strtol(int_buffer, &end, 10);
     }
-    while (end != int_buffer + strlen(int_buffer));
+    while (end != int_buffer + strlen(int_buffer) || !*int_buffer);
+
+    if (voter_count <= 0)
+    {
+        printf("\nTideman cannot process an election without voters\n");
+        return 5;
+    }
 
     // Query for votes
     for (int i = 0; i < voter_count; i++)
@@ -121,8 +135,8 @@ int main(int argc, char* argv[])
 
             if (!vote(j, name, ranks))
             {
-                printf("Invalid vote.\n");
-                return 4;
+                printf("\nThere is no candidate with such name\n");
+                return 6;
             }
 
             // Free allocated memory
@@ -140,8 +154,8 @@ int main(int argc, char* argv[])
     // Check if Tideman was able to print a winner
     if(!print_winner())
     {
-        printf("Tideman was not able to process a winner\n");
-        return 5;
+        printf("\nTideman was not able to process a winner\n");
+        return 7;
     }
 
     return 0;
