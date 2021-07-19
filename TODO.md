@@ -5,7 +5,7 @@
 
 3. Clear all ocurrencies of `variable == 0` and `variable == 1` **DONE**
 
-4. Fix all the bugs that Victor found while testing
+4. Fix all the bugs that [Victor](https://github.com/victorinknov) found while testing
 
 ### Notes
 `original/orig_tideman.c` is the original file taken from CS50 IDE </br>
