@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    // Check if input is greater than 10 characterss long
+    // Check if input is greater than 10 characters long
     for (int i = 0; i < argc - 1; i++)
     {
         if (strlen(argv[i + 1]) > NAME_MAX - 2)
