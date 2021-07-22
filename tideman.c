@@ -165,7 +165,7 @@ int main(int argc, char* argv[])
                 status = vote(j, name, ranks);
 
                 if (!status) printf(YELLOW    "\nThere is no candidate called %s\n\n"    RESET, name);
-                if (status == 2) printf(YELLOW    "\n%s was already chosen\n\n"    RESET, name);
+                if (status == 2) printf(YELLOW    "\n%s has already been chosen by Voter %i\n\n"    RESET, name, i + 1);
             }
             while (!status || status == 2);
 
