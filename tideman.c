@@ -23,13 +23,14 @@ pair;
 
 // Array of candidates
 char* candidates[CANDIDATE_MAX];
+bool candidates_status[CANDIDATE_MAX];
 pair pairs[CANDIDATE_MAX * (CANDIDATE_MAX - 1) / 2];
 
 int pair_count = 0;
 int candidate_count;
 
 // Function prototypes
-bool vote(int rank, char* name, int ranks[]);
+int vote(int rank, char* name, int ranks[]);
 void record_preferences(int ranks[]);
 void add_pairs(void);
 void sort_pairs(void);
@@ -68,13 +69,14 @@ int main(int argc, char* argv[])
         candidates[i] = argv[i + 1];
     }
 
-    // Clear graph of locked in pairs
+    // Clear graph of locked in pairs and candidates status
     for (int i = 0; i < candidate_count; i++)
     {
         for (int j = 0; j < candidate_count; j++)
         {
             locked[i][j] = false;
         }
+        candidates_status[i] = false;
     }
 
     // int voter_count = get_int("Number of voters: ");
@@ -124,6 +126,8 @@ int main(int argc, char* argv[])
             char* name = NULL;
             char name_buffer[NAME_MAX];
 
+            int status = -1;
+
             do
             {
                 printf("Rank %i: ", j + 1);
@@ -137,12 +141,21 @@ int main(int argc, char* argv[])
 
                 strcpy(name, name_buffer);
 
-                if (!vote(j, name, ranks)) printf("\nThere is no candidate called %s\n\n", name);
+                status = vote(j, name, ranks);
+
+                if (!status) printf("\nThere is no candidate called %s\n\n", name);
+                if (status == 2) printf("\n%s was already chosen\n\n", name);
             }
-            while (!vote(j, name, ranks));
+            while (!status || status == 2);
 
             // Free allocated memory
             free(name);
+        }
+
+        // Clear status for the next voter
+        for (int j = 0; j < candidate_count; j++)
+        {
+            candidates_status[j] = false;
         }
 
         record_preferences(ranks);
@@ -164,17 +177,22 @@ int main(int argc, char* argv[])
 }
 
 // Update ranks given a new vote
-bool vote(int rank, char* name, int ranks[])
+int vote(int rank, char* name, int ranks[])
 {
     for (int i = 0; i < candidate_count; i++)
     {
-        if (!strcmp(candidates[i], name))
+        if (!strcmp(candidates[i], name) && !candidates_status[i])
         {
+            candidates_status[i] = true;
             ranks[rank] = i;
-            return true;
+            return 1;
+        }
+        else if (!strcmp(candidates[i], name))
+        {
+            return 2;
         }
     }
-    return false;
+    return 0;
 }
 
 // Update preferences given one voter's ranks
