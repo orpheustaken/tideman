@@ -7,6 +7,16 @@
 #define INTEGER_MAX 5       // Max size for fgets one integer
 #define NAME_MAX 12         // Max size for fgets candidate name
 
+// Define ANSI colors for outputs
+#define RED     "\x1b[31m"
+#define GREEN   "\x1b[32m"
+#define YELLOW  "\x1b[33m"
+#define BLUE    "\x1b[34m"
+#define MAGENTA "\x1b[35m"
+#define CYAN    "\x1b[36m"
+
+#define RESET   "\x1b[0m"
+
 // Preferences[i][j] is number of voters who prefer i over j
 int preferences[CANDIDATE_MAX][CANDIDATE_MAX];
 
@@ -42,7 +52,7 @@ int main(int argc, char* argv[])
     // Check for invalid usage
     if (argc < 2)
     {
-        printf("\nUsage: ./tideman [candidate1] [candidate2] ...\n");
+        printf(RED    "\nUsage: ./tideman [candidate1] [candidate2] ...\n"    RESET);
         return 1;
     }
 
@@ -51,8 +61,8 @@ int main(int argc, char* argv[])
     {
         if (strlen(argv[i + 1]) > NAME_MAX - 2)
         {
-            printf("Error: %s\n\n", argv[i + 1]);
-            printf("Candidate's name cannot be greater than 10 characters long\n");
+            printf(RED    "\nError: %s\n"    RESET, argv[i + 1]);
+            printf(RED    "Candidate's name cannot be greater than 10 characters long\n"    RESET);
             return 2;
         }
     }
@@ -61,7 +71,7 @@ int main(int argc, char* argv[])
     candidate_count = argc - 1;
     if (candidate_count > CANDIDATE_MAX)
     {
-        printf("\nMaximum number of candidates is %i\n", CANDIDATE_MAX);
+        printf(RED    "\nMaximum number of candidates is %i\n"    RESET, CANDIDATE_MAX);
         return 3;
     }
     for (int i = 0; i < candidate_count; i++)
@@ -87,7 +97,7 @@ int main(int argc, char* argv[])
 
     do
     {
-        printf("Number of voters: ");
+        printf(CYAN    "Number of voters: "    RESET);
         if (!fgets(int_buffer, INTEGER_MAX, stdin)) break;
 
         // Remove \n and check for buffer overflow
@@ -97,25 +107,29 @@ int main(int argc, char* argv[])
         }
         else
         {
-            printf("\nThe number of voters cannot exceed 3 digits\n");
+            printf(RED    "\nThe number of voters cannot exceed 3 digits\n"    RESET);
             return 4;
         }
 
         voter_count = strtol(int_buffer, &end, 10);
 
-        if (end != int_buffer + strlen(int_buffer) || !*int_buffer) printf("\nInput must be a valid integer\n\n");
+        if (end != int_buffer + strlen(int_buffer) || !*int_buffer) printf(YELLOW    "\nInput must be a valid integer\n\n"    RESET);
     }
     while (end != int_buffer + strlen(int_buffer) || !*int_buffer);
 
     if (voter_count <= 0)
     {
-        printf("\nTideman cannot process an election without voters\n");
+        printf(RED    "\nTideman cannot process an election without voters\n"    RESET);
         return 5;
     }
+    printf("\n");
 
     // Query for votes
     for (int i = 0; i < voter_count; i++)
     {
+        // Specify current voter
+        printf(MAGENTA    "_____________________ Voter %i\n"    RESET, i + 1);
+
         // Ranks[i] is voter's ith preference
         int ranks[candidate_count];
 
@@ -130,7 +144,7 @@ int main(int argc, char* argv[])
 
             do
             {
-                printf("Rank %i: ", j + 1);
+                printf(CYAN    "Rank %i: "    RESET, j + 1);
                 if (!fgets(name_buffer, NAME_MAX, stdin)) break;
 
                 // Remove \n
@@ -143,8 +157,8 @@ int main(int argc, char* argv[])
 
                 status = vote(j, name, ranks);
 
-                if (!status) printf("\nThere is no candidate called %s\n\n", name);
-                if (status == 2) printf("\n%s was already chosen\n\n", name);
+                if (!status) printf(YELLOW    "\nThere is no candidate called %s\n\n"    RESET, name);
+                if (status == 2) printf(YELLOW    "\n%s was already chosen\n\n"    RESET, name);
             }
             while (!status || status == 2);
 
@@ -169,7 +183,7 @@ int main(int argc, char* argv[])
     // Check if Tideman was able to print a winner
     if(!print_winner())
     {
-        printf("\nTideman was not able to process a winner\n");
+        printf(RED    "\nTideman was not able to process a winner\n"    RESET);
         return 6;
     }
 
@@ -324,7 +338,7 @@ bool print_winner(void)
         }
         if (!not_source)
         {
-            printf("%s is the winner\n", candidates[i]);
+            printf(GREEN    "%s is the winner\n"    RESET, candidates[i]);
             winner++;
         }
     }
