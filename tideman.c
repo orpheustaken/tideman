@@ -33,8 +33,10 @@ pair;
 
 // Array of candidates
 char* candidates[CANDIDATE_MAX];
-bool candidates_status[CANDIDATE_MAX];
 pair pairs[CANDIDATE_MAX * (CANDIDATE_MAX - 1) / 2];
+
+// Specify if a candidate has been ranked by a voter
+bool candidates_status[CANDIDATE_MAX];
 
 int pair_count = 0;
 int candidate_count;
