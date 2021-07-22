@@ -12,25 +12,33 @@ $ make tideman
 ```
 
 ## Usage
+Colorful outputs are available inside the terminal emulator.
+
 ```bash
 $ ./tideman Alice Bob Charlie
 Number of voters: 5
+
+_____________________ Voter 1
 Rank 1: Alice
 Rank 2: Charlie
 Rank 3: Bob
 
+_____________________ Voter 2
 Rank 1: Alice
 Rank 2: Charlie
 Rank 3: Bob
 
+_____________________ Voter 3
 Rank 1: Bob
 Rank 2: Charlie
 Rank 3: Alice
 
+_____________________ Voter 4
 Rank 1: Bob
 Rank 2: Charlie
 Rank 3: Alice
 
+_____________________ Voter 5
 Rank 1: Charlie
 Rank 2: Alice
 Rank 3: Bob
