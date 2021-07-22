@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define CANDIDATE_MAX 9     // Max number of candidates
-#define INTEGER_MAX 5       // Max size for fgets one integer
-#define NAME_MAX 12         // Max size for fgets candidate name
+
+#define CANDIDATE_MAX   9       // Max number of candidates
+#define INTEGER_MAX     5       // Max size for fgets one integer - 2 (\n and \0)
+#define NAME_MAX        12      // Max size for fgets candidate name - 2
 
 // Define ANSI colors for outputs
 #define RED     "\x1b[31m"
@@ -16,6 +17,7 @@
 #define CYAN    "\x1b[36m"
 
 #define RESET   "\x1b[0m"
+
 
 // Preferences[i][j] is number of voters who prefer i over j
 int preferences[CANDIDATE_MAX][CANDIDATE_MAX];
@@ -38,7 +40,7 @@ pair pairs[CANDIDATE_MAX * (CANDIDATE_MAX - 1) / 2];
 // Specify if a candidate has been ranked by a voter
 bool candidates_status[CANDIDATE_MAX];
 
-int pair_count = 0;
+int pair_count;
 int candidate_count;
 
 // Function prototypes
@@ -81,7 +83,7 @@ int main(int argc, char* argv[])
         candidates[i] = argv[i + 1];
     }
 
-    // Clear graph of locked in pairs and candidates status
+    // Clear graph of locked in pairs and candidates_status
     for (int i = 0; i < candidate_count; i++)
     {
         for (int j = 0; j < candidate_count; j++)
@@ -94,7 +96,7 @@ int main(int argc, char* argv[])
     // int voter_count = get_int("Number of voters: ");
     int voter_count;
 
-    char* end;
+    char* end = NULL;
     char int_buffer[INTEGER_MAX];
 
     do
@@ -139,10 +141,9 @@ int main(int argc, char* argv[])
         for (int j = 0; j < candidate_count; j++)
         {
             // char* name = get_string("Rank %i: ", j + 1);
+            int status;
             char* name = NULL;
             char name_buffer[NAME_MAX];
-
-            int status = -1;
 
             do
             {
