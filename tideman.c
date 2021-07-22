@@ -95,11 +95,13 @@ int main(int argc, char* argv[])
         }
         else
         {
-            printf("\nThe number of voters must be less than 1000\n");
+            printf("\nThe number of voters cannot exceed 3 digits\n");
             return 4;
         }
 
         voter_count = strtol(int_buffer, &end, 10);
+
+        if (end != int_buffer + strlen(int_buffer) || !*int_buffer) printf("\nInput must be a valid integer\n\n");
     }
     while (end != int_buffer + strlen(int_buffer) || !*int_buffer);
 
@@ -122,22 +124,22 @@ int main(int argc, char* argv[])
             char* name = NULL;
             char name_buffer[NAME_MAX];
 
-            printf("Rank %i: ", j + 1);
-            if (!fgets(name_buffer, NAME_MAX, stdin)) break;
-
-            // Remove \n
-            name_buffer[strlen(name_buffer) - 1] = 0;
-
-            // Allocate heap memory
-            name = malloc(strlen(name_buffer) + 1);
-
-            strcpy(name, name_buffer);
-
-            if (!vote(j, name, ranks))
+            do
             {
-                printf("\nThere is no candidate with such name\n");
-                return 6;
+                printf("Rank %i: ", j + 1);
+                if (!fgets(name_buffer, NAME_MAX, stdin)) break;
+
+                // Remove \n
+                name_buffer[strlen(name_buffer) - 1] = 0;
+
+                // Allocate heap memory
+                name = malloc(strlen(name_buffer) + 1);
+
+                strcpy(name, name_buffer);
+
+                if (!vote(j, name, ranks)) printf("\nThere is no candidate called %s\n\n", name);
             }
+            while (!vote(j, name, ranks));
 
             // Free allocated memory
             free(name);
@@ -155,7 +157,7 @@ int main(int argc, char* argv[])
     if(!print_winner())
     {
         printf("\nTideman was not able to process a winner\n");
-        return 7;
+        return 6;
     }
 
     return 0;
