@@ -147,6 +147,13 @@ int main(int argc, char* argv[])
                 printf(CYAN    "Rank %i: "    RESET, j + 1);
                 if (!fgets(name_buffer, NAME_MAX, stdin)) break;
 
+                // Check for buffer overflow
+                if (name_buffer[strlen(name_buffer) - 1] != '\n')
+                {
+                    printf(RED    "\n\nTideman does not accept inputs greater than 10 characters long\n"    RESET);
+                    return 6;
+                }
+
                 // Remove \n
                 name_buffer[strlen(name_buffer) - 1] = 0;
 
@@ -184,7 +191,7 @@ int main(int argc, char* argv[])
     if(!print_winner())
     {
         printf(RED    "\nTideman was not able to process a winner\n"    RESET);
-        return 6;
+        return 7;
     }
 
     return 0;
