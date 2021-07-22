@@ -12,7 +12,7 @@ $ make tideman
 ```
 
 ## Usage
-Colorful outputs are available inside the terminal emulator.
+Colorful outputs are available from inside the terminal emulator.
 
 ```bash
 $ ./tideman Alice Bob Charlie
