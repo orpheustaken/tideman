@@ -49,6 +49,7 @@ Charlie is the winner
 At the moment a Graphical User Interface is being built for tideman using GTK 4. You can check it out in `tideman_gtk/` by running:
 ```bash
 $ make tideman_gtk
+$ ./tideman_gtk
 ```
 Just make sure to have gtk4 dependencies installed.
 
