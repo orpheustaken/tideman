@@ -1,3 +1,5 @@
+# exclude binaries
+
 tideman
 original/orig_tideman
 tideman_gtk/tideman_gtk
