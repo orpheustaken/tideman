@@ -45,6 +45,12 @@ Rank 3: Bob
 
 Charlie is the winner
 ```
+## GUI
+At the moment a Graphical User Interface is being implemented for tideman using GTK 4. You can check it out in `tideman_gtk/` by running:
+```bash
+$ make tideman_gtk
+```
+Just make sure to have gtk4 dependencies installed.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
