@@ -1,5 +1,4 @@
-#ifndef PROCELEC_H
-#define PROCELEC_H
+#pragma once
 
 #define CANDIDATE_MAX   9       // Max number of candidates
 #define INTEGER_MAX     5       // Max size for fgets one integer - 2 (\n and \0)
@@ -46,6 +45,4 @@ void add_pairs(void);
 void sort_pairs(void);
 void lock_pairs(void);
 int find_winner(void);
-
-#endif
 
