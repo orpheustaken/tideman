@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
     GtkApplication* app;
     int status;
 
-    app = gtk_application_new("org.gtk.example", G_APPLICATION_FLAGS_NONE);
+    app = gtk_application_new("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
     status = g_application_run(G_APPLICATION(app), argc, argv);
     g_object_unref(app);
@@ -29,9 +29,9 @@ static void activate(GtkApplication* app, gpointer user_data)
 
     window = gtk_application_window_new(app);
     gtk_window_set_title(GTK_WINDOW(window), "Tideman");
-    gtk_window_set_default_size(GTK_WINDOW(window), 200, 200);
+    gtk_window_set_default_size(GTK_WINDOW(window), 500, 500);
 
-    button = gtk_button_new_with_label("Tideman");
+    button = gtk_button_new_with_label("Tideman Button");
     g_signal_connect(button, "clicked", G_CALLBACK(print_info), NULL);
     gtk_window_set_child(GTK_WINDOW(window), button);
 
